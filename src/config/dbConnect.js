@@ -1,0 +1,17 @@
+const mongoose = require("mongoose");
+
+const connectedDB = async () => {
+  try {
+    if (!process.env.MONGO_URL) {
+      throw new Error("MONGO_URL is not defined in .env");
+    }
+
+    await mongoose.connect(process.env.MONGO_URL);
+    console.log("✅ MongoDB connected");
+  } catch (error) {
+    console.error("❌ MongoDB connection failed:", error);
+    process.exit(1); // stop server if DB fails
+  }
+};
+
+module.exports = connectedDB;
